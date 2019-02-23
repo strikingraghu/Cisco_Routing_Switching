@@ -53,6 +53,20 @@ data          None          None          None
 Configuration register is 0x2102
 
 
+RTR01#show flash
+
+System flash directory:
+File  Length   Name/status
+  3   33591768 c2900-universalk9-mz.SPA.151-4.M4.bin
+  2   28282    sigdef-category.xml
+  1   227537   sigdef-default.xml
+[33847587 bytes used, 221896413 available, 255744000 total]
+249856K bytes of processor board System flash (Read/Write)
+
+
+
+
+
 Notes -
 Keep a close on watch on below data!
 a) 3 Gigabit Ethernet interfaces
