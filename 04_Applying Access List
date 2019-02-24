@@ -1,0 +1,191 @@
+RTR01>en
+Password: 
+RTR01#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+
+RTR01(config)#?
+Configure commands:
+  aaa                Authentication, Authorization and Accounting.
+  access-list        Add an access list entry
+  banner             Define a login banner
+  bba-group          Configure BBA Group
+  boot               Modify system boot parameters
+  cdp                Global CDP configuration subcommands
+  class-map          Configure Class Map
+  clock              Configure time-of-day clock
+  config-register    Define the configuration register
+  crypto             Encryption module
+  default            Set a command to its defaults
+  do                 To run exec commands in config mode
+  dot11              IEEE 802.11 config commands
+  enable             Modify enable password parameters
+  end                Exit from configure mode
+  exit               Exit from configure mode
+  flow               Global Flow configuration subcommands
+  hostname           Set system's network name
+  interface          Select an interface to configure
+  ip                 Global IP configuration subcommands
+  ipv6               Global IPv6 configuration commands
+
+RTR01(config)#interface ?
+  Dialer            Dialer interface
+  Dot11Radio        Dot11 interface
+  Ethernet          IEEE 802.3
+  FastEthernet      FastEthernet IEEE 802.3
+  GigabitEthernet   GigabitEthernet IEEE 802.3z
+  Loopback          Loopback interface
+  Port-channel      Ethernet Channel of interfaces
+  Serial            Serial
+  Tunnel            Tunnel interface
+  Virtual-Template  Virtual Template interface
+  Vlan              Catalyst Vlans
+  range             interface range command
+
+RTR01(config)#interface GigabitEthernet 0/0
+
+RTR01(config-if)#?
+  arp                Set arp type (arpa, probe, snap) or timeout
+  bandwidth          Set bandwidth informational parameter
+  cdp                CDP interface subcommands
+  channel-group      Add this interface to an Etherchannel group
+  crypto             Encryption/Decryption commands
+  custom-queue-list  Assign a custom queue list to an interface
+  delay              Specify interface throughput delay
+  description        Interface specific description
+  duplex             Configure duplex operation.
+  exit               Exit from interface configuration mode
+  fair-queue         Enable Fair Queuing on an Interface
+  hold-queue         Set hold queue depth
+  ip                 Interface Internet Protocol config commands
+  ipv6               IPv6 interface subcommands
+  lldp               LLDP interface subcommands
+  mac-address        Manually set interface MAC address
+  mtu                Set the interface Maximum Transmission Unit (MTU)
+  no                 Negate a command or set its defaults
+  pppoe              pppoe interface subcommands
+  pppoe-client       pppoe client
+  priority-group     Assign a priority group to an interface
+  service-policy     Configure QoS Service Policy
+
+RTR01(config-if)#ip ?
+  access-group     Specify access control for packets
+  address          Set the IP address of an interface
+  authentication   authentication subcommands
+  flow             NetFlow Related commands
+  hello-interval   Configures IP-EIGRP hello interval
+  helper-address   Specify a destination address for UDP broadcasts
+  mtu              Set IP Maximum Transmission Unit
+  nat              NAT interface commands
+  ospf             OSPF interface commands
+  proxy-arp        Enable proxy ARP
+  split-horizon    Perform split horizon
+  summary-address  Perform address summarization
+RTR01(config-if)#ip access-group 99 out
+RTR01(config-if)#^Z
+RTR01#
+%SYS-5-CONFIG_I: Configured from console by console
+
+
+RTR01#wr mem
+Building configuration...
+[OK]
+RTR01#
+RTR01#show startup-con
+RTR01#show startup-config 
+Using 820 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname RTR01
+!
+!
+!
+enable secret 5 $1$mERr$yMJtrLS3ZrzZRg08baNC6.
+enable password cisco
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524CL4V-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 10.192.168.21 255.255.255.0
+ ip access-group 99 out
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ password hopkinton
+ login
+!
+!
+!
+end
+RTR01# 
+
+
+Notes -
+
+a) Helps in application of an IP (1-99 and 100-199) access list to an interface
+b) Becareful in this phase
+c) Write it to Memory after completion
