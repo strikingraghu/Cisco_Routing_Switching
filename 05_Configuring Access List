@@ -1,0 +1,237 @@
+RTR01#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+RTR01(config)#?
+Configure commands:
+  aaa                Authentication, Authorization and Accounting.
+  access-list        Add an access list entry
+  banner             Define a login banner
+  bba-group          Configure BBA Group
+  boot               Modify system boot parameters
+  cdp                Global CDP configuration subcommands
+  class-map          Configure Class Map
+  clock              Configure time-of-day clock
+  config-register    Define the configuration register
+  crypto             Encryption module
+  default            Set a command to its defaults
+  do                 To run exec commands in config mode
+  dot11              IEEE 802.11 config commands
+  enable             Modify enable password parameters
+  end                Exit from configure mode
+  exit               Exit from configure mode
+  flow               Global Flow configuration subcommands
+  hostname           Set system's network name
+  interface          Select an interface to configure
+  ip                 Global IP configuration subcommands
+  ipv6               Global IPv6 configuration commands
+
+RTR01(config)#access-list ?
+  <1-99>     IP standard access list
+  <100-199>  IP extended access list
+  
+RTR01(config)#access-list 150 ?
+  deny    Specify packets to reject
+  permit  Specify packets to forward
+  remark  Access list entry comment
+  
+RTR01(config)#access-list 150 permit ?
+  ahp    Authentication Header Protocol
+  eigrp  Cisco's EIGRP routing protocol
+  esp    Encapsulation Security Payload
+  gre    Cisco's GRE tunneling
+  icmp   Internet Control Message Protocol
+  ip     Any Internet Protocol
+  ospf   OSPF routing protocol
+  tcp    Transmission Control Protocol
+  udp    User Datagram Protocol
+  
+RTR01(config)#access-list 150 permit tcp ?
+  A.B.C.D  Source address
+  any      Any source host
+  host     A single source host
+  
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 ?
+  A.B.C.D  Source wildcard bits
+  
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 ?
+  A.B.C.D  Destination address
+  any      Any destination host
+  eq       Match only packets on a given port number
+  gt       Match only packets with a greater port number
+  host     A single destination host
+  lt       Match only packets with a lower port number
+  neq      Match only packets not on a given port number
+  range    Match only packets in the range of port numbers
+  
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 10.106.194.10 ?
+  A.B.C.D  Destination wildcard bits
+  
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 10.106.194.10 0.0.0.255 ?
+  dscp         Match packets with given dscp value
+  eq           Match only packets on a given port number
+  established  established
+  gt           Match only packets with a greater port number
+  lt           Match only packets with a lower port number
+  neq          Match only packets not on a given port number
+  precedence   Match packets with given precedence value
+  range        Match only packets in the range of port numbers
+  <cr>
+  
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 10.106.194.10 0.0.0.255 eq ?
+  <0-65535>  Port number
+  ftp        File Transfer Protocol (21)
+  pop3       Post Office Protocol v3 (110)
+  smtp       Simple Mail Transport Protocol (25)
+  telnet     Telnet (23)
+  www        World Wide Web (HTTP, 80)
+  
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 10.106.194.10 0.0.0.255 eq www
+
+
+
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 10.106.194.10 0.0.0.255 eq ?
+  <0-65535>  Port number
+  ftp        File Transfer Protocol (21)
+  pop3       Post Office Protocol v3 (110)
+  smtp       Simple Mail Transport Protocol (25)
+  telnet     Telnet (23)
+  www        World Wide Web (HTTP, 80)
+RTR01(config)#access-list 150 permit tcp 10.106.192.10 0.0.0.255 10.106.194.10 0.0.0.255 eq ftp
+RTR01(config)#access-list 150 deny ?
+  ahp    Authentication Header Protocol
+  eigrp  Cisco's EIGRP routing protocol
+  esp    Encapsulation Security Payload
+  gre    Cisco's GRE tunneling
+  icmp   Internet Control Message Protocol
+  ip     Any Internet Protocol
+  ospf   OSPF routing protocol
+  tcp    Transmission Control Protocol
+  udp    User Datagram Protocol
+  
+  
+RTR01(config)#access-list 150 deny tcp ?
+  A.B.C.D  Source address
+  any      Any source host
+  host     A single source host
+
+RTR01(config)#access-list 150 deny tcp any ?
+  A.B.C.D  Destination address
+  any      Any destination host
+  eq       Match only packets on a given port number
+  gt       Match only packets with a greater port number
+  host     A single destination host
+  lt       Match only packets with a lower port number
+  neq      Match only packets not on a given port number
+  range    Match only packets in the range of port numbers
+  
+RTR01(config)#access-list 150 deny tcp any any
+
+
+
+RTR01(config)#end
+RTR01#
+%SYS-5-CONFIG_I: Configured from console by console
+RTR01#wr mem
+Building configuration...
+[OK]
+RTR01#show startup-config
+Using 1014 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname RTR01
+!
+!
+!
+enable secret 5 $1$mERr$yMJtrLS3ZrzZRg08baNC6.
+enable password cisco
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX15245I6Q-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 10.106.192.21 255.255.255.0
+ ip access-group 150 out
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+access-list 150 permit tcp 10.106.192.0 0.0.0.255 10.106.194.0 0.0.0.255 eq www
+access-list 150 permit tcp 10.106.192.0 0.0.0.255 10.106.194.0 0.0.0.255 eq ftp
+access-list 150 deny tcp any any
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ password hopkinton
+ login
+!
+!
+!
+end
+
+ --More-- 
+ 
+ 
+ Notes -
+ 
+ a) Becareful towards applying this list
+ b) Validate the access-list after modifications
+ c) Take a backup of access-list
+ d) Write it back to memory without fail
