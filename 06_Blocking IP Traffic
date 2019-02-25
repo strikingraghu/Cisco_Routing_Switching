@@ -1,0 +1,152 @@
+RTR01>en
+Password: 
+RTR01#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+
+RTR01(config)#access-list 101 deny ip 192.168.1.0 0.0.0.255 192.168.5.0 0.0.0.255
+RTR01(config)#access-list 101 permit ip any any
+
+
+RTR01(config)#?
+Configure commands:
+  aaa                Authentication, Authorization and Accounting.
+  access-list        Add an access list entry
+  banner             Define a login banner
+  bba-group          Configure BBA Group
+  boot               Modify system boot parameters
+  cdp                Global CDP configuration subcommands
+  class-map          Configure Class Map
+  clock              Configure time-of-day clock
+  config-register    Define the configuration register
+  crypto             Encryption module
+  default            Set a command to its defaults
+  do                 To run exec commands in config mode
+  dot11              IEEE 802.11 config commands
+  enable             Modify enable password parameters
+  end                Exit from configure mode
+  exit               Exit from configure mode
+  flow               Global Flow configuration subcommands
+  hostname           Set system's network name
+  interface          Select an interface to configure
+  ip                 Global IP configuration subcommands
+  ipv6               Global IPv6 configuration commands
+
+RTR01(config)#interface ?
+  Dialer            Dialer interface
+  Dot11Radio        Dot11 interface
+  Ethernet          IEEE 802.3
+  FastEthernet      FastEthernet IEEE 802.3
+  GigabitEthernet   GigabitEthernet IEEE 802.3z
+  Loopback          Loopback interface
+  Port-channel      Ethernet Channel of interfaces
+  Serial            Serial
+  Tunnel            Tunnel interface
+  Virtual-Template  Virtual Template interface
+  Vlan              Catalyst Vlans
+  range             interface range command
+RTR01(config)#interface GigabitEthernet ?
+  <0-9>  GigabitEthernet interface number
+RTR01(config)#interface GigabitEthernet 0/0/0
+
+
+RTR01(config-if)#ip access-group 101 in
+RTR01(config-if)#end
+
+
+RTR01#
+%SYS-5-CONFIG_I: Configured from console by console
+
+RTR01#wr mem
+Building configuration...
+[OK]
+RTR01#
+RTR01#
+RTR01#show startup-config
+Using 794 bytes
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname RTR01
+!
+!
+!
+enable secret 5 $1$mERr$yMJtrLS3ZrzZRg08baNC6.
+enable password cisco
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 10.106.192.21 255.255.255.0
+ ip access-group 101 in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+access-list 101 deny ip 192.168.1.0 0.0.0.255 192.168.5.0 0.0.0.255
+access-list 101 permit ip any any
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ password hopkinton
+ login
+!
+!
+!
+end
+RTR01# 
+
+
+Notes -
+a) Becareful in applying this modification
+b) It's one of the sample to apply any blocks to IP traffic
+c) So after the same, try to test this ACL configurations
