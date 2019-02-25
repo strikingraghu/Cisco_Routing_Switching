@@ -1,0 +1,88 @@
+RTR01#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+RTR01(config)#access-list 102 deny udp host 192.168.4.254 any eq 53
+RTR01(config)#access-list 102 permit ip any any
+
+
+RTR01(config)#interface ?
+  Dialer            Dialer interface
+  Dot11Radio        Dot11 interface
+  Ethernet          IEEE 802.3
+  FastEthernet      FastEthernet IEEE 802.3
+  GigabitEthernet   GigabitEthernet IEEE 802.3z
+  Loopback          Loopback interface
+  Port-channel      Ethernet Channel of interfaces
+  Serial            Serial
+  Tunnel            Tunnel interface
+  Virtual-Template  Virtual Template interface
+  Vlan              Catalyst Vlans
+  range             interface range command
+
+
+
+RTR01(config)#interface GigabitEthernet 0/0/0
+RTR01(config-if)#?
+  arp                Set arp type (arpa, probe, snap) or timeout
+  bandwidth          Set bandwidth informational parameter
+  cdp                CDP interface subcommands
+  channel-group      Add this interface to an Etherchannel group
+  crypto             Encryption/Decryption commands
+  custom-queue-list  Assign a custom queue list to an interface
+  delay              Specify interface throughput delay
+  description        Interface specific description
+  duplex             Configure duplex operation.
+  exit               Exit from interface configuration mode
+  fair-queue         Enable Fair Queuing on an Interface
+  hold-queue         Set hold queue depth
+  ip                 Interface Internet Protocol config commands
+  ipv6               IPv6 interface subcommands
+  lldp               LLDP interface subcommands
+  mac-address        Manually set interface MAC address
+  media-type         Configure media type
+  mtu                Set the interface Maximum Transmission Unit (MTU)
+  no                 Negate a command or set its defaults
+  pppoe              pppoe interface subcommands
+  pppoe-client       pppoe client
+  priority-group     Assign a priority group to an interface
+
+
+RTR01(config-if)#ip ?
+  access-group     Specify access control for packets
+  address          Set the IP address of an interface
+  authentication   authentication subcommands
+  flow             NetFlow Related commands
+  hello-interval   Configures IP-EIGRP hello interval
+  helper-address   Specify a destination address for UDP broadcasts
+  inspect          Apply inspect name
+  ips              Create IPS rule
+  mtu              Set IP Maximum Transmission Unit
+  nat              NAT interface commands
+  ospf             OSPF interface commands
+  proxy-arp        Enable proxy ARP
+  split-horizon    Perform split horizon
+  summary-address  Perform address summarization
+  
+  
+RTR01(config-if)#ip access-group 102 in
+RTR01(config-if)#exit
+RTR01(config)#exit
+RTR01#
+
+
+%SYS-5-CONFIG_I: Configured from console by console
+
+RTR01#wr mem
+
+
+Building configuration...
+[OK]
+RTR01#
+
+
+Notes -
+
+a) It's one of the sample to block UDP traffic
+b) You can test the same configuration. First, try to point host via NAME and it should fail (DNS 53 Protocol)
+c) However, you will see response by pinging via IP value
+d) Test this out in NON-PROD for all validations
+
