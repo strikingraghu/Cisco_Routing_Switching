@@ -1,0 +1,130 @@
+RTR01>en
+Password: 
+
+
+RTR01#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+
+RTR01(config)#?
+Configure commands:
+  aaa                Authentication, Authorization and Accounting.
+  access-list        Add an access list entry
+  banner             Define a login banner
+  bba-group          Configure BBA Group
+  boot               Modify system boot parameters
+  cdp                Global CDP configuration subcommands
+  class-map          Configure Class Map
+  clock              Configure time-of-day clock
+  config-register    Define the configuration register
+  crypto             Encryption module
+  default            Set a command to its defaults
+  do                 To run exec commands in config mode
+  dot11              IEEE 802.11 config commands
+  enable             Modify enable password parameters
+  end                Exit from configure mode
+  exit               Exit from configure mode
+  flow               Global Flow configuration subcommands
+  hostname           Set system's network name
+  interface          Select an interface to configure
+  ip                 Global IP configuration subcommands
+  ipv6               Global IPv6 configuration commands
+
+
+RTR01(config)#cdp ?
+  run  Enable CDP
+RTR01(config)#cdp run
+RTR01(config)#
+
+
+
+RTR01(config)#
+RTR01(config)#interface gi0/0/0
+RTR01(config-if)#?
+  arp                Set arp type (arpa, probe, snap) or timeout
+  bandwidth          Set bandwidth informational parameter
+  cdp                CDP interface subcommands
+  channel-group      Add this interface to an Etherchannel group
+  crypto             Encryption/Decryption commands
+  custom-queue-list  Assign a custom queue list to an interface
+  delay              Specify interface throughput delay
+  description        Interface specific description
+  duplex             Configure duplex operation.
+  exit               Exit from interface configuration mode
+  fair-queue         Enable Fair Queuing on an Interface
+  hold-queue         Set hold queue depth
+  ip                 Interface Internet Protocol config commands
+  ipv6               IPv6 interface subcommands
+  lldp               LLDP interface subcommands
+  mac-address        Manually set interface MAC address
+  media-type         Configure media type
+  mtu                Set the interface Maximum Transmission Unit (MTU)
+  no                 Negate a command or set its defaults
+  pppoe              pppoe interface subcommands
+  pppoe-client       pppoe client
+  priority-group     Assign a priority group to an interface
+
+
+
+RTR01(config-if)#cdp ?
+  enable  Enable CDP on interface
+RTR01(config-if)#cdp enable
+RTR01(config-if)#
+
+
+RTR01(config-if)#end
+RTR01#
+%SYS-5-CONFIG_I: Configured from console by console
+
+RTR01#wr mem
+Building configuration...
+[OK]
+RTR01#
+RTR01#
+
+
+
+RTR01#show cdp
+Global CDP information:
+    Sending CDP packets every 60 seconds
+    Sending a holdtime value of 180 seconds
+    Sending CDPv2 advertisements is enabled
+RTR01#
+RTR01#
+RTR01#show cdp ?
+  entry      Information for specific neighbor entry
+  interface  CDP interface status and configuration
+  neighbors  CDP neighbor entries
+  <cr>
+RTR01#show cdp entry RTR02
+
+
+
+RTR01#show cdp interface
+Vlan1 is administratively down, line protocol is down
+  Sending CDP packets every 60 seconds
+  Holdtime is 180 seconds
+GigabitEthernet0/0/0 is up, line protocol is down
+  Sending CDP packets every 60 seconds
+  Holdtime is 180 seconds
+GigabitEthernet0/0/1 is administratively down, line protocol is down
+  Sending CDP packets every 60 seconds
+  Holdtime is 180 seconds
+RTR01#
+RTR01#
+
+
+RTR01#
+RTR01#show cdp neighbors
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone
+Device ID    Local Intrfce   Holdtme    Capability   Platform    Port ID
+RTR01#
+RTR01#
+
+
+
+Notes -
+a) Cisco Discovery Protocol is very effective to know the neighbouring devices
+b) "cdp run" at a global level is enough to activate CDP settings
+c) Use sniffer tools to detect CDP logs & helps in understanding more on the same
